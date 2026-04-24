@@ -273,120 +273,16 @@
       font-weight: 800;
     }
 
-    .doc-user-sidebar,
-    .doc-admin-sidebar {
-      display: none;
-      width: 280px;
-      min-height: 100vh;
-      padding: 24px;
-      position: fixed;
-      inset: 0 auto 0 0;
-      z-index: 100;
-      background: rgba(0, 0, 0, 0.92);
-      color: #fff;
-      box-shadow: 0 24px 50px rgba(2, 6, 23, 0.45);
-      flex-direction: column;
-      justify-content: space-between;
-      gap: 24px;
-    }
-
-    :root {
-      --doc-menu-link: #d1d5db;
-      --doc-menu-hover-bg: #1f2937;
-      --doc-menu-active-bg: #047857;
-      --doc-menu-active-ring: rgba(16, 185, 129, 0.45);
-    }
-
-    .doc-user-sidebar nav a,
-    .doc-admin-sidebar nav a {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding: 13px 14px;
-      margin: 10px 0;
-      text-decoration: none;
-      color: var(--doc-menu-link);
-      border-radius: 10px;
-      transition: background 0.25s ease, color 0.25s ease;
-      cursor: pointer;
-      font-weight: 600;
-    }
-
-    .doc-user-sidebar nav i,
-    .doc-admin-sidebar nav i {
-      width: 18px;
-      text-align: center;
-      flex: 0 0 18px;
-    }
-
-    .doc-user-sidebar nav a:hover,
-    .doc-admin-sidebar nav a:hover,
-    .doc-user-sidebar nav .nav-active,
-    .doc-admin-sidebar nav .nav-active {
-      color: #fff;
-    }
-
-    .doc-user-sidebar nav a:hover,
-    .doc-admin-sidebar nav a:hover {
-      background: var(--doc-menu-hover-bg);
-    }
-
-    .doc-user-sidebar nav .nav-active,
-    .doc-admin-sidebar nav .nav-active {
-      background: var(--doc-menu-active-bg);
-      box-shadow: inset 0 0 0 1px var(--doc-menu-active-ring);
-    }
-
-    .doc-user-sidebar .logo,
-    .doc-admin-sidebar .logo {
-      color: #fff;
-      margin-bottom: 18px;
-    }
-
-    .doc-user-sidebar .sidebar-bottom,
-    .doc-admin-sidebar .sidebar-bottom {
-      display: grid;
-      gap: 12px;
-    }
-
-    .doc-user-sidebar .lang-box,
-    .doc-admin-sidebar .lang-box {
-      background: rgba(255, 255, 255, 0.08);
-      padding: 10px;
-      border-radius: 10px;
-    }
-
-    .doc-user-sidebar .lang-title,
-    .doc-admin-sidebar .lang-title {
-      margin-bottom: 8px;
-      font-size: 13px;
-      font-weight: 700;
-    }
-
-    .doc-user-sidebar .lang-select,
-    .doc-admin-sidebar .lang-select {
-      width: 100%;
-      border: 1px solid rgba(255, 255, 255, 0.25);
-      background: rgba(17, 24, 39, 0.9);
-      color: #fff;
-      border-radius: 8px;
-      padding: 10px;
-      font-size: 12px;
-      font-weight: 700;
-      cursor: pointer;
-    }
-
-    html[data-role="user"] .doc-user-sidebar {
-      display: flex;
-    }
-
-    html[data-role="admin"] .doc-admin-sidebar {
-      display: flex;
-    }
-
     html[data-role="user"] .topbar,
     html[data-role="admin"] .topbar {
       display: none;
+    }
+
+    html[data-role="user"] .ib-sidebar,
+    html[data-role="admin"] .ib-sidebar {
+      position: fixed;
+      inset: 0 auto 0 0;
+      z-index: 100;
     }
 
     html[data-role="user"] .doc-page,
@@ -424,8 +320,8 @@
     }
 
     @media (max-width: 900px) {
-      html[data-role="user"] .doc-user-sidebar,
-      html[data-role="admin"] .doc-admin-sidebar {
+      html[data-role="user"] .ib-sidebar,
+      html[data-role="admin"] .ib-sidebar {
         position: static;
         width: 100%;
         min-height: auto;
@@ -448,67 +344,7 @@
 </head>
 <body>
 
-<aside class="doc-user-sidebar">
-  <div>
-    <div class="logo">
-      <img class="brand-logo-lg" src="intellibuild-mark.svg" alt="IntelliBuild">
-      <span>IntelliBuild</span>
-    </div>
-
-    <nav>
-      <a href="user.html"><i class="fas fa-home"></i><span data-key="nav_dashboard">Dashboard</span></a>
-      <a href="mesobjet.html"><i class="fas fa-box-open"></i><span data-key="nav_my_objects">Mes objets</span></a>
-      <a href="localisations-user.html"><i class="fas fa-map-marker-alt"></i><span data-key="nav_locations">Localisations</span></a>
-      <a href="notifications-user.html"><i class="fas fa-bell"></i><span data-key="nav_notifications">Notifications</span></a>
-      <a href="#" id="openFavoritesOverlay"><i class="fas fa-heart"></i><span>Favoris</span></a>
-      <a href="#" id="openReportsOverlay"><i class="fas fa-flag"></i><span>Signaler un problème</span></a>
-      <a href="documatation.html" class="nav-active"><i class="fas fa-book-open"></i><span data-key="nav_documentation">Documentation</span></a>
-      <a href="parametres-user.html#historySection"><i class="fas fa-clock-rotate-left"></i><span data-key="nav_history">Historique</span></a>
-      <a href="parametres-user.html"><i class="fas fa-cog"></i><span data-key="nav_settings">Parametres</span></a>
-    </nav>
-  </div>
-
-  <div class="sidebar-bottom">
-    <div class="lang-box">
-      <div class="lang-title" data-key="lang_title">Langue</div>
-      <select class="lang-select" aria-label="Choisir la langue">
-        <option value="fr">FR</option>
-        <option value="en">EN</option>
-        <option value="ar">AR</option>
-      </select>
-    </div>
-  </div>
-</aside>
-
-<aside class="doc-admin-sidebar">
-  <div>
-    <div class="logo">
-      <img class="brand-logo-lg" src="intellibuild-mark.svg" alt="IntelliBuild">
-      <span>IntelliBuild</span>
-    </div>
-
-    <nav>
-      <a href="index.html"><i class="fas fa-home"></i><span data-key="nav_dashboard">Dashboard</span></a>
-      <a href="ajouter-objet.html"><i class="fas fa-plus"></i><span data-key="nav_add">Ajouter</span></a>
-      <a href="objets.html"><i class="fas fa-cube"></i><span data-key="nav_objects">Objets</span></a>
-      <a href="localisations.html"><i class="fas fa-map-marker-alt"></i><span data-key="nav_locations">Localisations</span></a>
-      <a href="notifications-admin.html"><i class="fas fa-bell"></i><span data-key="nav_notifications">Notifications</span></a>
-      <a href="documatation.html" class="nav-active"><i class="fas fa-book-open"></i><span data-key="nav_documentation">Documentation</span></a>
-      <a href="parametres.html"><i class="fas fa-cog"></i><span data-key="nav_settings">Parametres</span></a>
-    </nav>
-  </div>
-
-  <div class="sidebar-bottom">
-    <div class="lang-box">
-      <div class="lang-title" data-key="lang_title">Langue</div>
-      <select class="lang-select" aria-label="Choisir la langue">
-        <option value="fr">FR</option>
-        <option value="en">EN</option>
-        <option value="ar">AR</option>
-      </select>
-    </div>
-  </div>
-</aside>
+<script src="sidebar-loader.js"></script>
 
 <header class="topbar">
   <h2>

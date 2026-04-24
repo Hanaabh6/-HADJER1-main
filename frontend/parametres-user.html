@@ -251,36 +251,7 @@
   </style>
 </head>
 <body>
-  <aside class="sidebar">
-    <div>
-      <div class="logo">
-        <img src="intellibuild-mark.svg" alt="Logo IntelliBuild">
-        <h2 class="text-xl font-bold">IntelliBuild</h2>
-      </div>
-
-      <nav>
-        <a href="user.html"><i class="fas fa-home mr-2"></i><span data-key="nav_dashboard">Dashboard</span></a>
-        <a href="mesobjet.html"><i class="fas fa-box-open mr-2"></i> <span data-key="nav_my_objects">Mes objets</span></a>
-        <a href="localisations-user.html"><i class="fas fa-map-marker-alt mr-2"></i><span data-key="nav_locations">Localisations</span></a>
-        <a href="notifications-user.html"><i class="fas fa-bell mr-2"></i> <span data-key="nav_notifications">Notifications</span></a>
-        <a href="#" id="openFavoritesOverlay"><i class="fas fa-heart mr-2"></i><span data-key="nav_favorites">Favoris</span></a>
-        <a href="#" id="openReportsOverlay"><i class="fas fa-flag mr-2"></i><span data-key="nav_report_issue">Signaler un problème</span></a>
-        <a href="documatation.html"><i class="fas fa-book-open mr-2"></i> <span data-key="nav_documentation">Documentation</span></a>
-        <a href="#historySection"><i class="fas fa-clock-rotate-left mr-2"></i><span data-key="nav_history">Historique</span></a>
-        <a href="parametres-user.html" class="nav-active"><i class="fas fa-cog mr-2"></i> Parametres</a>
-      </nav>
-    </div>
-
-    <div class="bg-white/10 p-4 rounded-xl">
-      <div class="text-xs font-bold mb-2 uppercase opacity-80">Langue</div>
-      <select id="langSelect" class="w-full bg-slate-900 border border-white/20 rounded-lg p-2 text-sm text-white">
-        <option value="fr">FR</option>
-        <option value="en">EN</option>
-        <option value="ar">AR</option>
-      </select>
-      <p id="langNote" class="text-xs mt-2 opacity-80">Langue active: FR</p>
-    </div>
-  </aside>
+  <script src="sidebar-loader.js"></script>
 
   <main class="main-wrap">
     <section id="profileSection" class="glass p-6 mb-5">
@@ -473,11 +444,30 @@
       };
     }
 
+    function clearSessionAndGoLogin(debugMessage) {
+      try {
+        if (debugMessage) {
+          updateDebugPanel([debugMessage]);
+        }
+      } catch (e) {
+        console.error("debug redirect err", e);
+      }
+      localStorage.removeItem("userToken");
+      localStorage.removeItem("userRole");
+      localStorage.removeItem("userEmail");
+      localStorage.removeItem("userId");
+      window.location.href = "login.html";
+    }
+
     function applyLang(lang) {
       const locale = (lang || "fr").toLowerCase();
       localStorage.setItem("lang", locale);
-      langSelect.value = locale;
-      langNote.textContent = `Langue active: ${locale.toUpperCase()}`;
+      if (langSelect) {
+        langSelect.value = locale;
+      }
+      if (langNote) {
+        langNote.textContent = `Langue active: ${locale.toUpperCase()}`;
+      }
       if (window.setLang) window.setLang(locale);
     }
 
@@ -557,6 +547,10 @@
         throw new Error("Impossible de charger le profil utilisateur (network)");
       }
       if (!response.ok) {
+        if (response.status === 401 || response.status === 403) {
+          clearSessionAndGoLogin("Session invalide/expiree - redirection login");
+          return;
+        }
         const text = await response.text().catch(() => '');
         updateDebugPanel([ `Profile fetch failed: ${response.status}`, text ]);
         throw new Error("Impossible de charger le profil utilisateur");
@@ -684,7 +678,9 @@
     });
 
     document.getElementById("refreshHistoryBtn").addEventListener("click", loadHistory);
-    langSelect.addEventListener("change", function () { applyLang(langSelect.value); });
+    if (langSelect) {
+      langSelect.addEventListener("change", function () { applyLang(langSelect.value); });
+    }
 
     (async function init() {
       try {
@@ -694,7 +690,9 @@
       } catch (error) {
         console.error(error);
         updateDebugPanel([ 'Init error: ' + (error && error.message ? error.message : String(error)) ]);
-        alert("Impossible de charger les parametres utilisateur.");
+        if (!(error && /Session invalide|expiree|Unauthorized|401|403/i.test(String(error.message || error)))) {
+          alert("Impossible de charger les parametres utilisateur.");
+        }
       }
     })();
 
