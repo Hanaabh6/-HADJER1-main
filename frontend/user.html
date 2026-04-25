@@ -1926,11 +1926,13 @@ document.addEventListener("keydown", (event) => {
 
 mainSearch.addEventListener("input", () => loadUserThings(mainSearch.value));
 
-openHistoryOverlay.addEventListener("click", async (event) => {
-  event.preventDefault();
-  await loadUserHistory();
-  openOverlay("Historique utilisateur", buildHistoryOverlayHtml());
-});
+if (openHistoryOverlay) {
+  openHistoryOverlay.addEventListener("click", async (event) => {
+    event.preventDefault();
+    await loadUserHistory();
+    openOverlay("Historique utilisateur", buildHistoryOverlayHtml());
+  });
+}
 openFavoritesOverlay.addEventListener("click", (event) => {
   event.preventDefault();
   openOverlay("Mes favoris", buildFavoritesOverlayHtml());
