@@ -170,46 +170,7 @@
         }
     </script>
 
-    <aside class="w-64 glass-sidebar min-h-screen text-gray-300 p-6 flex flex-col gap-6 shadow-2xl">
-        <div class="text-2xl font-bold flex items-center gap-2 text-white">
-            <img src="intellibuild-mark.svg" alt="IntelliBuild" class="h-10 w-10 rounded-full object-contain">
-            <span>IntelliBuild</span>
-        </div>
-        <select class="lang w-full bg-gray-800 text-gray-200 rounded-lg p-2 text-sm">
-            <option value="fr">FR</option>
-            <option value="en">EN</option>
-            <option value="ar">AR</option>
-        </select>
-        <nav class="flex flex-col gap-4 mt-10">
-            <a href="index.html" class="bg-emerald-700 p-3 rounded-lg flex items-center gap-3 text-white">
-                <i class="fas fa-home"></i> <span data-key="nav_dashboard">Dashboard</span>
-            </a>
-            <a href="ajouter-objet.html" class="p-3 hover:bg-gray-800 rounded-lg flex items-center gap-3 transition">
-                <i class="fas fa-plus"></i> <span data-key="nav_add">Ajouter</span>
-            </a>
-            <a href="objets.html" class="p-3 hover:bg-gray-800 rounded-lg flex items-center gap-3 transition">
-                <i class="fas fa-cube"></i> <span data-key="nav_objects">Objets</span>
-            </a>
-            <a href="localisations.html" class="p-3 hover:bg-gray-800 rounded-lg flex items-center gap-3 transition">
-                <i class="fas fa-map-marker-alt"></i> <span data-key="nav_locations">Localisations</span>
-            </a>
-            <a href="#" id="openHistoryOverlay" class="p-3 hover:bg-gray-800 rounded-lg flex items-center gap-3 transition">
-                <i class="fas fa-clock-rotate-left"></i> <span data-key="nav_history">Historique</span>
-            </a>
-            <a href="#" id="openAdminReportsOverlay" class="p-3 hover:bg-gray-800 rounded-lg flex items-center gap-3 transition">
-                <i class="fas fa-flag"></i> <span>Signalements</span>
-            </a>
-            <a href="notifications-admin.html" class="p-3 hover:bg-gray-800 rounded-lg flex items-center gap-3 transition">
-                <i class="fas fa-bell"></i> <span data-key="nav_notifications">Notifications</span>
-            </a>
-            <a href="documatation.html" class="p-3 hover:bg-gray-800 rounded-lg flex items-center gap-3 transition">
-                <i class="fas fa-book-open"></i> <span data-key="nav_documentation">Documentation</span>
-            </a>
-            <a href="parametres.html" class="p-3 hover:bg-gray-800 rounded-lg flex items-center gap-3 transition mt-auto">
-                <i class="fas fa-cog"></i> <span data-key="nav_settings">Paramètres</span>
-            </a>
-        </nav>
-    </aside>
+    <script src="sidebar-loader.js"></script>
 
     <main class="flex-1 p-8">
         <div class="admin-topbar">

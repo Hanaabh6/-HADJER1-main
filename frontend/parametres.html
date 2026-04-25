@@ -262,31 +262,7 @@
   </style>
 </head>
 <body>
-  <aside class="sidebar">
-    <div class="logo text-2xl font-bold">
-      <img src="intellibuild-mark.svg" alt="Logo IntelliBuild">
-      <span>IntelliBuild</span>
-    </div>
-
-    <select id="langSelect" class="w-full bg-gray-800 text-gray-200 rounded-lg p-2 text-sm border border-gray-700 focus:ring-2 focus:ring-emerald-500 outline-none">
-      <option value="fr">FR</option>
-      <option value="en">EN</option>
-      <option value="ar">AR</option>
-    </select>
-    <p id="langNote" class="text-xs -mt-3 opacity-80">Langue active: FR</p>
-
-    <nav>
-      <a href="index.html"><i class="fas fa-home"></i> Dashboard</a>
-      <a href="ajouter-objet.html"><i class="fas fa-plus"></i> Ajouter objet</a>
-      <a href="objets.html"><i class="fas fa-cube"></i> Objets</a>
-      <a href="localisations.html"><i class="fas fa-map-marker-alt"></i> Localisations</a>
-      <a href="#" id="openHistoryOverlay"><i class="fas fa-clock-rotate-left"></i> Historique</a>
-      <a href="#" id="openAdminReportsOverlay"><i class="fas fa-flag"></i> Signalements</a>
-      <a href="notifications-admin.html"><i class="fas fa-bell"></i> <span data-key="nav_notifications">Notifications</span></a>
-      <a href="documatation.html"><i class="fas fa-book-open"></i> <span data-key="nav_documentation">Documentation</span></a>
-      <a href="parametres.html" class="nav-active mt-auto"><i class="fas fa-cog"></i> Parametres</a>
-    </nav>
-  </aside>
+  <script src="sidebar-loader.js"></script>
 
   <main class="main-wrap">
     <section class="page-hero glass mb-5">
@@ -540,8 +516,12 @@
     function applyLang(lang) {
       const locale = (lang || "fr").toLowerCase();
       localStorage.setItem("lang", locale);
-      langSelect.value = locale;
-      langNote.textContent = `Langue active: ${locale.toUpperCase()}`;
+      if (langSelect) {
+        langSelect.value = locale;
+      }
+      if (langNote) {
+        langNote.textContent = `Langue active: ${locale.toUpperCase()}`;
+      }
       if (window.setLang) window.setLang(locale);
     }
 
@@ -908,7 +888,9 @@
       await loadHistory();
     });
 
-    langSelect.addEventListener("change", function () { applyLang(langSelect.value); });
+    if (langSelect) {
+      langSelect.addEventListener("change", function () { applyLang(langSelect.value); });
+    }
 
     applyLang(localStorage.getItem("lang") || "fr");
     loadAdminProfile();
